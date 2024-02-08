@@ -31,12 +31,12 @@ I found it helpful to iterate through the loops visually to determine the combin
 
 All of this is to say that the content contained in the inner loop will run $n-1$ times; the merge function will be called $n-1$ times.
 
-In our merge function we have a for loop that contains operations of constant complexity. Taking a look at the for loop:
+In our merge function we have a for loop that contains operations of constant complexity, as well as a slicing operation that has a time complexity of $\Theta(n)$ since it is reassigning the array to itself without the element that we wish to move. Taking a look at the for loop:
 
 ```for (var a = lo; a < hi; a++)```
 
-We see that it is simply iterating through the subarray bound by the indexes of lo to hi. Which is to say that it iterates $\frac{n}{C}$ times depending on the size of the subarray. 
-Combining this we find the overall time complexity for the worst-case runtime: $(n-1)(\frac{n}{C})=n^2\in\Theta(n^2)$.
+We see that it is simply iterating through the subarray bound by the indexes of lo to hi. Which is to say that it iterates $\frac{n}{C}$ times depending on the size of the subarray. Combining this with the complexity of the inside of the loop we get $\frac{n^2}{C}$ for the mergesort function.
+Combining this, we find the overall time complexity for the worst-case of this implimentation: $(n-1)(\frac{n^2}{C})=n^3\in\Theta(n^3)$.
 
 
 Sources:
