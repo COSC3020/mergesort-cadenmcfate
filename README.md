@@ -17,7 +17,8 @@ its worst-case runtime. Add your answer, including your reasoning, to this
 markdown file.
 
 ## Answer
-First, analyzing the mergesort function, we want to find the complexity of the two for loops.
+
+First, we want to find the complexity of the two for loops.
 The first for loop: 
 
 ```for(var jump=1; jump <= hi; jump *= 2) ``` 
@@ -29,15 +30,15 @@ However, analyzing the second for loop becomes tricky because we see that each i
 
 I found it helpful to iterate through the loops visually to determine the combined complexity. Taking, for example, an array of length 8, we have that the outter loop will iterate 3 times, with jump values of 1,2, and 4. In the inner loop we see that with a jump value of 1, we will iterate 4 times ($4=\frac{n}{2}$). On the next iteration we will double the size of our subarrays and iterate twice ($2=\frac{n}{4}$). On the final iteration of the outter loop, we only iterate through the inner loop once ($1=\frac{n}{8}$). Noticing this pattern gives us this sum: $\sum\limits_{i=1}^{\log_2 n} \frac{n}{2^i}$, which simplifies to $n-1$.
 
-All of this is to say that the content contained in the inner loop will run $n-1$ times; the merge function will be called $n-1$ times.
+All of this is to say that the content contained in the first two loops will run $n-1$ times.
 
-In our merge function we have a for loop that contains operations of constant complexity, as well as a slicing operation that has a time complexity of $\Theta(n)$ since it is reassigning the array to itself without the element that we wish to move. Taking a look at the for loop:
+After this we have some constant time operations, and then encounter a for loop that iterates through an array of size $\frac{n}{C}$:
 
 ```for (var a = lo; a < hi; a++)```
 
-We see that it is simply iterating through the subarray bound by the indexes of lo to hi. Which is to say that it iterates $\frac{n}{C}$ times depending on the size of the subarray. Combining this with the complexity of the inside of the loop we get $\frac{n^2}{C}$ for the mergesort function.
-Combining this, we find the overall time complexity for the worst-case of this implimentation: $(n-1)(\frac{n^2}{C})=n^3\in\Theta(n^3)$.
+Inside this loop we have as a slicing operation as well as a splicing operation that both have a time complexity of $\Theta(n)$. So the inner-most for loop has a rough complexity of $2n$.
 
+Combining all of this we have $(n-1)(\frac{n}{C})(2n)=n^3\in\Theta(n^3)$ for the worst-case time complexity of this implimentation.
 
 Sources:
 ChatGPT was consulted once for this exercise with the prompt of "Give me generalized hints on how to impliment an in-place function when it usually isn't in-place. Don't show me code".
